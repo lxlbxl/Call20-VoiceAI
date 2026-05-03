@@ -6,7 +6,14 @@ WORKDIR /app
 # Install system dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
     gcc \
+    g++ \
+    pkg-config \
     libpq-dev \
+    libavcodec-dev \
+    libavformat-dev \
+    libavutil-dev \
+    libswresample-dev \
+    libswscale-dev \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy requirements
@@ -28,4 +35,4 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=10s --retries=3 \
     CMD curl -f http://localhost:8765/health || exit 1
 
 # Start both services
-CMD ["python", "voice_agent.py"]
+CMD ["python", "voice_agent.py"]
