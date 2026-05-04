@@ -1,50 +1,29 @@
 # Call20 Pipecat Voice Agent Dockerfile
+# Installs PyAV from pre-built wheels to avoid FFmpeg dev library compilation (saves memory)
 FROM python:3.11-slim
 
 WORKDIR /app
 
-# Install build tools first (small package, low memory)
+# Install FFmpeg runtime libraries only (no dev headers - PyAV wheels include what they need)
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-    gcc \
-    g++ \
-    pkg-config \
+    libavutil59 \
+    libavcodec59 \
+    libavformat59 \
+    libswresample4 \
+    libswscale6 \
+    libpq5 \
+    curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Install PostgreSQL client library (small)
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-    libpq-dev \
-    && rm -rf /var/lib/apt/lists/*
-
-# Install FFmpeg libraries one at a time to reduce memory pressure
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-    libavutil-dev \
-    && rm -rf /var/lib/apt/lists/*
-
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-    libswresample-dev \
-    && rm -rf /var/lib/apt/lists/*
-
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-    libswscale-dev \
-    && rm -rf /var/lib/apt/lists/*
-
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-    libavcodec-dev \
-    && rm -rf /var/lib/apt/lists/*
-
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-    libavformat-dev \
-    && rm -rf /var/lib/apt/lists/*
-
-# Copy requirements and install Python dependencies
+# Copy requirements
 COPY pipecat/requirements.txt .
+
+# Install PyAV first from pre-built wheel (av>=11.0 has manylinux wheels)
+# This avoids needing FFmpeg dev headers for compilation
+RUN pip install --no-cache-dir "av>=11.0,<14.0"
+
+# Install remaining dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy application
