@@ -12,6 +12,7 @@ RUN apt-get update && \
     g++ \
     python3-dev \
     libffi-dev \
+    pkg-config \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
