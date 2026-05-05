@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { callsApi } from '@/lib/api'
+import { callsApi } from '@/client/api'
 import { toast } from 'sonner'
 import { Phone, Clock, User, Headphones, Filter } from 'lucide-react'
 

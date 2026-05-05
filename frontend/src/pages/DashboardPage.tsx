@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { callsApi, paymentsApi, agentsApi } from '@/lib/api'
+import { callsApi, paymentsApi, agentsApi } from '@/client/api'
 import { toast } from 'sonner'
 import {
     Phone,

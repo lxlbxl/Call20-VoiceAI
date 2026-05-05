@@ -1,6 +1,6 @@
 import { useState, FormEvent } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { authApi } from '@/lib/api'
+import { authApi } from '@/client/api'
 import { toast } from 'sonner'
 import { Phone } from 'lucide-react'
 

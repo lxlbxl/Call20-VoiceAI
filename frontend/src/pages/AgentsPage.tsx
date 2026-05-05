@@ -1,5 +1,5 @@
 import { useState, useEffect, FormEvent } from 'react'
-import { agentsApi, kbApi } from '@/lib/api'
+import { agentsApi, kbApi } from '@/client/api'
 import { toast } from 'sonner'
 import { Headphones, Plus, Trash2, Edit2, Loader2, Globe, Mic, BookOpen } from 'lucide-react'
 

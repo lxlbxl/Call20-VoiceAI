@@ -1,5 +1,5 @@
 import { useState, useEffect, FormEvent } from 'react'
-import { smsApi } from '@/lib/api'
+import { smsApi } from '@/client/api'
 import { toast } from 'sonner'
 import { MessageSquare, Send, Phone, Clock, Loader2 } from 'lucide-react'
 

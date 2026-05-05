@@ -1,5 +1,5 @@
 import { useState, useEffect, FormEvent } from 'react'
-import { paymentsApi } from '@/lib/api'
+import { paymentsApi } from '@/client/api'
 import { toast } from 'sonner'
 import {
     Wallet, CreditCard, Gift, ArrowUpRight, ArrowDownLeft,

@@ -1,5 +1,5 @@
 import { useState, useEffect, FormEvent } from 'react'
-import { webhooksApi } from '@/lib/api'
+import { webhooksApi } from '@/client/api'
 import { toast } from 'sonner'
 import { Webhook, Plus, Trash2, Edit2, Loader2, Power, Play } from 'lucide-react'
 

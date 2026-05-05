@@ -1,5 +1,5 @@
 import { useState, useEffect, FormEvent } from 'react'
-import { apiKeysApi } from '@/lib/api'
+import { apiKeysApi } from '@/client/api'
 import { toast } from 'sonner'
 import { Key, Plus, Trash2, Loader2, Eye, EyeOff, Copy, Check } from 'lucide-react'
 

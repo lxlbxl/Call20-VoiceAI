@@ -1,5 +1,5 @@
 import { useState, useEffect, FormEvent } from 'react'
-import { kbApi } from '@/lib/api'
+import { kbApi } from '@/client/api'
 import { toast } from 'sonner'
 import { Database, Plus, Trash2, Loader2, FileText, Globe, ClipboardList } from 'lucide-react'
 

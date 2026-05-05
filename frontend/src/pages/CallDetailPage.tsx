@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { callsApi } from '@/lib/api'
+import { callsApi } from '@/client/api'
 import { toast } from 'sonner'
 import {
     ArrowLeft, Phone, Clock, User, Headphones,

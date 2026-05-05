@@ -1,5 +1,5 @@
 import { useState, useEffect, FormEvent } from 'react'
-import { didsApi } from '@/lib/api'
+import { didsApi } from '@/client/api'
 import { toast } from 'sonner'
 import { Phone, Plus, Trash2, Loader2 } from 'lucide-react'
 

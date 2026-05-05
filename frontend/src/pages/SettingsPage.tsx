@@ -1,5 +1,5 @@
 import { useState, useEffect, FormEvent } from 'react'
-import { tenantsApi } from '@/lib/api'
+import { tenantsApi } from '@/client/api'
 import { toast } from 'sonner'
 import { Building2, Mail, Phone, Clock, Save, Loader2, AlertCircle } from 'lucide-react'
 
