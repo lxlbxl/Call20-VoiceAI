@@ -1,12 +1,19 @@
 # Call20 Pipecat Voice Agent Dockerfile
-# Uses python:3.11-slim with build dependencies for native extensions
-FROM python:3.11-slim
+# Uses python:3.11-bookworm with all build dependencies
+# CACHE_BUST: 2026-05-05-v3 - force full rebuild
+FROM python:3.11-bookworm
 
 # Install FFmpeg, build dependencies, and system libraries
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     ffmpeg \
+    libavcodec-dev \
+    libavformat-dev \
+    libavutil-dev \
     libavdevice-dev \
+    libavfilter-dev \
+    libswscale-dev \
+    libswresample-dev \
     libpq5 \
     gcc \
     g++ \
