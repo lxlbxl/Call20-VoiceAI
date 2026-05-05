@@ -1,33 +1,21 @@
 # Call20 Pipecat Voice Agent Dockerfile
-# Uses jrottenberg/ffmpeg base image with FFmpeg pre-installed
-# This avoids ALL FFmpeg library installation during build (no OOM risk)
-FROM jrottenberg/ffmpeg:latest AS ffmpeg-base
-
-# Use Python slim and copy FFmpeg from the ffmpeg image
+# Uses python:3.11-slim + apt ffmpeg (lightweight, no OOM risk)
 FROM python:3.11-slim
 
-# Copy FFmpeg binaries and libraries from ffmpeg-base
-COPY --from=ffmpeg-base /usr/local/bin /usr/local/bin
-COPY --from=ffmpeg-base /usr/local/lib /usr/local/lib
-COPY --from=ffmpeg-base /usr/local/include /usr/local/include
-COPY --from=ffmpeg-base /usr/local/share /usr/local/share
-
-# Set library path for FFmpeg
-ENV LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
-
-WORKDIR /app
-
-# Install only PostgreSQL client library and curl (minimal)
+# Install FFmpeg and system dependencies
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
+    ffmpeg \
     libpq5 \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy requirements
+WORKDIR /app
+
+# Copy requirements and install Python dependencies
 COPY pipecat/requirements.txt .
 
-# Install PyAV from pre-built wheel (it will use the copied FFmpeg)
+# Install PyAV (will use system FFmpeg)
 RUN pip install --no-cache-dir "av>=11.0,<14.0"
 
 # Install remaining dependencies
