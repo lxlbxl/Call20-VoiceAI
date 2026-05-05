@@ -137,5 +137,4 @@ jobs:
           file: frontend/Dockerfile
           push: true
           tags: ${{ env.GHCR_REGISTRY }}/${{ env.GHCR_USERNAME }}/${{ env.REPO_NAME }}-frontend:latest
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          no-cache: true
