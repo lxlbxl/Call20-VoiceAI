@@ -106,9 +106,11 @@ export default function KnowledgeBasesPage() {
                                         <td className="p-4 font-medium">{kb.name}</td>
                                         <td className="p-4">
                                             <span className="flex items-center gap-1 text-sm">
-                                                {SOURCE_TYPES.find((s) => s.value === kb.source_type)?.icon && (
-                                                    <SOURCE_TYPES.find((s) => s.value === kb.source_type)!.icon className="w-3.5 h-3.5" />
-                                                )}
+                                                {(() => {
+                                                    const sourceType = SOURCE_TYPES.find((s) => s.value === kb.source_type);
+                                                    const IconComponent = sourceType?.icon;
+                                                    return IconComponent ? <IconComponent className="w-3.5 h-3.5" /> : null;
+                                                })()}
                                                 {kb.source_type}
                                             </span>
                                         </td>
