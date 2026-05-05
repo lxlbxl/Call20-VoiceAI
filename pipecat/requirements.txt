@@ -1,18 +1,10 @@
 # Call20 Pipecat Voice Agent Requirements
 
-# Pipecat
+# Pipecat (base package only - no extras that pull in aiortc/av)
 pipecat-ai==0.0.35
 
-# Voice Pipeline
-pipecat-ai[google]==0.0.35
-pipecat-ai[cartesia]==0.0.35
-pipecat-ai[deepgram]==0.0.35
-
-# LLM
+# LLM - install google-generativeai directly instead of via pipecat-ai[google]
 google-generativeai==0.3.2
-
-# SIP - av is pinned in constraints.txt (has manylinux wheels)
-# aiortc is pulled in by pipecat-ai extras and requires av<12.0
 
 # Database
 sqlalchemy[asyncio]==2.0.25
