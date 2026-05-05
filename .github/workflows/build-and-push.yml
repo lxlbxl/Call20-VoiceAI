@@ -77,8 +77,6 @@ jobs:
           file: Dockerfile.pipecat
           push: true
           tags: ${{ env.GHCR_REGISTRY }}/${{ env.GHCR_USERNAME }}/${{ env.REPO_NAME }}-voice-agent:latest
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
           no-cache: true
 
   build-and-push-sip-gateway:
@@ -109,8 +107,6 @@ jobs:
           file: Dockerfile.pipecat
           push: true
           tags: ${{ env.GHCR_REGISTRY }}/${{ env.GHCR_USERNAME }}/${{ env.REPO_NAME }}-sip-gateway:latest
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
           no-cache: true
 
   build-and-push-frontend:
