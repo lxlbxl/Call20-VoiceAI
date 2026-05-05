@@ -25,12 +25,11 @@ RUN apt-get update && \
 
 WORKDIR /app
 
-# Copy requirements and install ALL dependencies in one command
-# This lets pip resolve versions correctly without conflicts
+# Copy requirements and install ALL dependencies
+# av==11.0.0 has pre-built manylinux wheels - use --prefer-binary to ensure wheel is used
+# aiortc (pulled by pipecat-ai extras) requires av<12.0 which av==11.0.0 satisfies
 COPY pipecat/requirements.txt .
-RUN pip install --no-cache-dir \
-    "av==11.0.0" \
-    -r requirements.txt
+RUN pip install --no-cache-dir --prefer-binary -r requirements.txt
 
 # Copy application
 COPY pipecat/ .
