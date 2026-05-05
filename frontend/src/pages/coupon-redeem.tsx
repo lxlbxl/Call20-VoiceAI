@@ -3,9 +3,8 @@
  * Allows tenants to enter a coupon code and redeem credits.
  */
 import { useState } from 'react';
-import Head from 'next/head';
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+const API_BASE = import.meta.env.VITE_API_URL || '/api/v1';
 
 export default function CouponRedeemPage() {
     const [code, setCode] = useState('');
@@ -36,7 +35,7 @@ export default function CouponRedeemPage() {
                 return;
             }
 
-            const res = await fetch(`${API_BASE}/api/v1/coupons/redeem`, {
+            const res = await fetch(`${API_BASE}/payments/redeem-coupon`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -66,9 +65,6 @@ export default function CouponRedeemPage() {
 
     return (
         <>
-            <Head>
-                <title>Redeem Coupon — Call20</title>
-            </Head>
             <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
                 <div className="w-full max-w-md">
                     {/* Card */}
@@ -155,8 +151,8 @@ export default function CouponRedeemPage() {
                         {result && (
                             <div
                                 className={`mt-6 p-4 rounded-lg ${result.success
-                                        ? 'bg-green-50 border border-green-200'
-                                        : 'bg-red-50 border border-red-200'
+                                    ? 'bg-green-50 border border-green-200'
+                                    : 'bg-red-50 border border-red-200'
                                     }`}
                             >
                                 <div className="flex items-start gap-3">
