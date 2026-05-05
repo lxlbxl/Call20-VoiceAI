@@ -13,7 +13,6 @@ import {
     X,
     BarChart3,
     Headphones,
-    Smartphone,
 } from 'lucide-react'
 import { useState } from 'react'
 
@@ -80,8 +79,8 @@ export default function DashboardLayout() {
                                 to={item.href}
                                 onClick={() => setSidebarOpen(false)}
                                 className={`flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors ${isActive
-                                        ? 'bg-primary/10 text-primary'
-                                        : 'text-gray-600 hover:bg-gray-100'
+                                    ? 'bg-primary/10 text-primary'
+                                    : 'text-gray-600 hover:bg-gray-100'
                                     }`}
                             >
                                 <item.icon className="w-5 h-5" />
