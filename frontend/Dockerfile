@@ -7,9 +7,9 @@ WORKDIR /app
 COPY package.json ./
 RUN npm install
 
-# Copy source and build
+# Copy source and build (skip tsc, vite build handles transpilation)
 COPY . .
-RUN npm run build
+RUN npx vite build
 
 # Use Nginx to serve the build
 FROM nginx:alpine
