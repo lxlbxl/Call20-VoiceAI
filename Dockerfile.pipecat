@@ -25,11 +25,13 @@ RUN apt-get update && \
 
 WORKDIR /app
 
-# Copy requirements and install ALL dependencies
-# av==11.0.0 has pre-built manylinux wheels - use --prefer-binary to ensure wheel is used
+# Copy constraints and requirements
+# Constraints force av==11.0.0 which has pre-built manylinux wheels
 # aiortc (pulled by pipecat-ai extras) requires av<12.0 which av==11.0.0 satisfies
+# --no-build-isolation ensures constraints are respected during builds
+COPY pipecat/constraints.txt .
 COPY pipecat/requirements.txt .
-RUN pip install --no-cache-dir --prefer-binary -r requirements.txt
+RUN pip install --no-cache-dir --no-build-isolation -c constraints.txt -r requirements.txt
 
 # Copy application
 COPY pipecat/ .

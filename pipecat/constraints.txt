@@ -1,0 +1,3 @@
+# Constraints to force pre-built wheels
+# av<12.0 has no pre-built wheels for many platforms, force 11.0.0 which does
+av==11.0.0
