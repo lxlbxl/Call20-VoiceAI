@@ -11,8 +11,8 @@ pipecat-ai[deepgram]==0.0.35
 # LLM
 google-generativeai==0.3.2
 
-# SIP (unpinned to get latest compatible version with av>=12.0 pre-built wheels)
-aiortc
+# SIP - installed separately in Dockerfile (av first, then aiortc)
+# to ensure av>=12.0 pre-built wheel is used
 
 # Database
 sqlalchemy[asyncio]==2.0.25
