@@ -11,9 +11,8 @@ pipecat-ai[deepgram]==0.0.35
 # LLM
 google-generativeai==0.3.2
 
-# SIP - av must be installed from pre-built wheel (has manylinux wheels)
+# SIP - av is pinned in constraints.txt (has manylinux wheels)
 # aiortc is pulled in by pipecat-ai extras and requires av<12.0
-av==11.0.0
 
 # Database
 sqlalchemy[asyncio]==2.0.25
