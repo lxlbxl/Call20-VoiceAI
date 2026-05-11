@@ -25,6 +25,8 @@ class Settings(BaseSettings):
 
     # ── Auth ───────────────────────────────────────────────────────────────────
     SECRET_KEY: str = os.getenv("SECRET_KEY", "dev-secret-key-change-in-production")
+    JWT_SECRET_KEY: str = os.getenv("SECRET_KEY", "dev-secret-key-change-in-production")
+    JWT_ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60
     REFRESH_TOKEN_EXPIRE_DAYS: int = 30
     VERIFICATION_TOKEN_EXPIRE_HOURS: int = 24

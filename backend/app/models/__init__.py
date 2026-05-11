@@ -25,8 +25,8 @@ from app.models.admin_setting import AdminSetting
 from app.models.audit_log import AuditLog, AuditAction
 
 # Phase 4: Financial & Promotional
-from app.models.wallet_transaction import WalletTransaction, TransactionType
-from app.models.coupon import Coupon, CouponType
+from app.models.wallet_transaction import WalletTransaction, TransactionType, TransactionSource
+from app.models.coupon import Coupon, CouponType, CouponStatus, CouponRedemption
 
 __all__ = [
     "Base",
@@ -48,6 +48,9 @@ __all__ = [
     "AuditAction",
     "WalletTransaction",
     "TransactionType",
+    "TransactionSource",
     "Coupon",
     "CouponType",
+    "CouponStatus",
+    "CouponRedemption",
 ]

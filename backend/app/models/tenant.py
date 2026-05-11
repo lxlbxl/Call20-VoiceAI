@@ -27,6 +27,7 @@ class PlanType(str, enum.Enum):
 
 
 class UserRole(str, enum.Enum):
+    SUPER_ADMIN = "SUPER_ADMIN"
     OWNER = "owner"
     ADMIN = "admin"
     AGENT_MANAGER = "agent_manager"

@@ -11,13 +11,16 @@ import httpx
 from pipecat.pipeline.pipeline import Pipeline
 from pipecat.pipeline.runner import PipelineRunner
 from pipecat.pipeline.task import PipelineTask
-from pipecat.processors.frameworks.openai import OpenAILLMContext
-from pipecat.transports.services.websocket import WebsocketTransport, WebsocketParams
+from pipecat.processors.aggregators.openai_llm_context import OpenAILLMContext
+from pipecat.transports.services.daily import DailyParams, DailyTransport
 from pipecat.services.cartesia import CartesiaTTSService
 from pipecat.services.deepgram import DeepgramSTTService
 from pipecat.services.google import GoogleLLMService
 from pipecat.transports.services.daily import DailyParams, DailyTransport
-from pipecat.transports.services.websocket import WebsocketParams
+from pipecat.transports.network.websocket_server import (
+    WebsocketServerTransport as WebsocketTransport,
+    WebsocketServerParams as WebsocketParams,
+)
 
 import aiohttp
 
@@ -194,7 +197,7 @@ async def run_call_pipeline(
     from_number: str,
     to_number: str,
     agent_config_id: str,
-    websocket: aiohttp.WebSocketResponse,
+    websocket,
 ):
     """
     Run the full voice pipeline for an inbound call.
@@ -248,7 +251,7 @@ async def handle_inbound_call(
     from_number: str,
     to_number: str,
     agent_config_id: str,
-    websocket: aiohttp.WebSocketResponse,
+    websocket,
 ):
     """
     Entry point for inbound calls from DIDWW SIP trunk.

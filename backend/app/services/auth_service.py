@@ -105,7 +105,7 @@ async def get_current_user(
     return user
 
 
-async def require_role(required_role: UserRole):
+def require_role(required_role: UserRole):
     """Dependency factory to check user role."""
     async def role_checker(current_user: User = Depends(get_current_user)):
         if current_user.role.value not in (required_role.value, "owner", "admin"):
