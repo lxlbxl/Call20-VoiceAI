@@ -96,12 +96,16 @@ services:
     depends_on:
       - voice-agent
 
-  # ── Frontend ────────────────────────────────────────────────────────────────
+  # ── Frontend (Next.js standalone) ─────────────────────────────────────────────
   frontend:
     build:
       context: ./frontend
+      dockerfile: Dockerfile
     ports:
-      - "3102:80"
+      - "3102:3000"
+    environment:
+      NEXT_PUBLIC_API_URL: /api/v1
+      API_URL: http://backend:8000/api/v1
     depends_on:
       - backend
 
