@@ -6,6 +6,7 @@ import uuid
 from typing import Optional
 
 from fastapi import APIRouter, Depends, HTTPException, status
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.database import get_db
@@ -33,7 +34,7 @@ from app.schemas.auth import (
     ChangePasswordRequest,
     UserResponse,
 )
-from app.models.tenant import User
+from app.models.tenant import User, Tenant
 
 router = APIRouter(prefix="/api/v1/auth", tags=["Authentication"])
 

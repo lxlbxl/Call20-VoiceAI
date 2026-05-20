@@ -8,6 +8,8 @@ from fastapi.responses import JSONResponse
 from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
+import logging
+import sentry_sdk
 from prometheus_fastapi_instrumentator import Instrumentator
 
 from app.core.config import settings
@@ -20,6 +22,7 @@ from app.api import (
 # ── Limiter ──────────────────────────────────────────────────────────────────
 
 limiter = Limiter(key_func=get_remote_address)
+logger = logging.getLogger(__name__)
 
 # ── Application Factory ──────────────────────────────────────────────────────
 
@@ -34,6 +37,13 @@ app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 # ── Monitoring ───────────────────────────────────────────────────────────────
+
+if settings.SENTRY_DSN:
+    sentry_sdk.init(
+        dsn=settings.SENTRY_DSN,
+        traces_sample_rate=1.0,
+        profiles_sample_rate=1.0,
+    )
 
 Instrumentator().instrument(app).expose(app)
 
@@ -52,9 +62,9 @@ app.add_middleware(
 
 @app.on_event("startup")
 async def startup():
-    """Create tables on startup (dev only; use migrations in production)."""
-    async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
+    """Initialize resources on startup."""
+    if settings.DEBUG:
+        logger.info("Starting up Call20 API in DEBUG mode.")
 
 
 @app.on_event("shutdown")
@@ -95,6 +105,7 @@ app.include_router(payments.router)
 @app.exception_handler(Exception)
 async def global_exception_handler(request, exc):
     """Global exception handler."""
+    logger.error(f"Unhandled exception: {exc}", exc_info=True)
     return JSONResponse(
         status_code=500,
         content={

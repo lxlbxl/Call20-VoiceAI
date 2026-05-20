@@ -42,14 +42,19 @@ services:
       DATABASE_URL: postgresql+asyncpg://call20:call20_dev@postgres:5432/call20
       REDIS_URL: redis://redis:6379
       SECRET_KEY: ${SECRET_KEY:-dev-secret-key-change-in-production}
+      DEBUG: ${DEBUG:-false}
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:3000,http://localhost:3102}
       DIDWW_API_KEY: ${DIDWW_API_KEY}
       DEEPGRAM_API_KEY: ${DEEPGRAM_API_KEY}
       CARTESIA_API_KEY: ${CARTESIA_API_KEY}
       GOOGLE_API_KEY: ${GOOGLE_API_KEY}
       FIRECRAWL_API_KEY: ${FIRECRAWL_API_KEY}
       FIRECRAWL_API_URL: ${FIRECRAWL_API_URL:-https://api.firecrawl.dev}
+      PAYSTACK_SECRET_KEY: ${PAYSTACK_SECRET_KEY}
+      FLUTTERWAVE_SECRET_KEY: ${FLUTTERWAVE_SECRET_KEY}
+      USD_TO_NGN_RATE: ${USD_TO_NGN_RATE:-1500}
       CALL20_ADMIN_TOKEN: ${CALL20_ADMIN_TOKEN}
-      DEBUG: "true"
+      SENTRY_DSN: ${SENTRY_DSN}
     depends_on:
       postgres:
         condition: service_healthy
@@ -57,7 +62,8 @@ services:
         condition: service_healthy
     command: >
       sh -c "
-        uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+        alembic upgrade head &&
+        uvicorn app.main:app --host 0.0.0.0 --port 8000 --workers 2
       "
 
   # ── Voice Agent (Pipecat) ───────────────────────────────────────────────────

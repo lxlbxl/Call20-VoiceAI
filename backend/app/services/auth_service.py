@@ -117,8 +117,8 @@ def require_role(required_role: UserRole):
 # ── Two-Factor Authentication (TOTP) ─────────────────────────────────────────
 
 def generate_totp_secret() -> str:
-    """Generate a random TOTP secret."""
-    return secrets.token_hex(20)
+    """Generate a random TOTP secret in Base32 format."""
+    return base64.b32encode(secrets.token_bytes(20)).decode("utf-8")
 
 
 def generate_totp_uri(secret: str, email: str, tenant_name: str) -> str:

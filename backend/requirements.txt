@@ -9,6 +9,7 @@ pydantic-settings==2.1.0
 email-validator==2.1.0
 slowapi==0.1.9
 prometheus-fastapi-instrumentator==6.1.0
+sentry-sdk[fastapi]==1.40.6
 
 # Database
 sqlalchemy[asyncio]==2.0.25

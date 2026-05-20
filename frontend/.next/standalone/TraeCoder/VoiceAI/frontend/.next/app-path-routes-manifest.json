@@ -1,0 +1,19 @@
+{
+  "/(auth)/login/page": "/login",
+  "/(auth)/register/page": "/register",
+  "/_global-error/page": "/_global-error",
+  "/_not-found/page": "/_not-found",
+  "/dashboard/admin/page": "/dashboard/admin",
+  "/dashboard/agents/page": "/dashboard/agents",
+  "/dashboard/api-keys/page": "/dashboard/api-keys",
+  "/dashboard/billing/page": "/dashboard/billing",
+  "/dashboard/calls/page": "/dashboard/calls",
+  "/dashboard/dids/page": "/dashboard/dids",
+  "/dashboard/knowledge-bases/page": "/dashboard/knowledge-bases",
+  "/dashboard/page": "/dashboard",
+  "/dashboard/settings/page": "/dashboard/settings",
+  "/dashboard/sms/page": "/dashboard/sms",
+  "/dashboard/webhooks/page": "/dashboard/webhooks",
+  "/favicon.ico/route": "/favicon.ico",
+  "/page": "/"
+}

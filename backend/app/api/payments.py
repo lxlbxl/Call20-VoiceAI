@@ -4,6 +4,8 @@ Wallet top-up, coupon redemption, and payment webhooks.
 """
 import uuid
 import secrets
+import hmac
+import hashlib
 from datetime import datetime
 from typing import Optional
 
@@ -130,7 +132,20 @@ async def paystack_webhook(
 ):
     """
     Handle Paystack webhook for payment verification.
+    Validates HMAC-SHA512 signature to prevent fake event injection.
     """
+    from app.core.config import settings
+    body = await request.body()
+    received_sig = request.headers.get("x-paystack-signature", "")
+    expected_sig = hmac.new(
+        settings.PAYSTACK_SECRET_KEY.encode("utf-8"),
+        body,
+        hashlib.sha512,
+    ).hexdigest()
+    if not hmac.compare_digest(expected_sig, received_sig):
+        from fastapi import HTTPException
+        raise HTTPException(status_code=401, detail="Invalid webhook signature")
+
     payload = await request.json()
     event = payload.get("event")
 
@@ -162,7 +177,14 @@ async def flutterwave_webhook(
 ):
     """
     Handle Flutterwave webhook for payment verification.
+    Validates secret hash header to prevent fake event injection.
     """
+    from app.core.config import settings
+    flw_secret_hash = request.headers.get("verif-hash", "")
+    if not hmac.compare_digest(flw_secret_hash, settings.FLUTTERWAVE_SECRET_KEY):
+        from fastapi import HTTPException
+        raise HTTPException(status_code=401, detail="Invalid webhook signature")
+
     payload = await request.json()
     event = payload.get("event")
 

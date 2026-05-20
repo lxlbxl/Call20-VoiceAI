@@ -32,11 +32,14 @@ class Settings(BaseSettings):
     VERIFICATION_TOKEN_EXPIRE_HOURS: int = 24
 
     # ── CORS ───────────────────────────────────────────────────────────────────
-    CORS_ORIGINS: List[str] = [
-        "http://localhost:3000",
-        "http://localhost:5173",
-        "https://app.call20.ai",
-    ]
+    CORS_ORIGINS_STR: str = os.getenv(
+        "CORS_ORIGINS",
+        "http://localhost:3000,http://localhost:5173,https://app.call20.ai"
+    )
+
+    @property
+    def CORS_ORIGINS(self) -> List[str]:
+        return [origin.strip() for origin in self.CORS_ORIGINS_STR.split(",") if origin.strip()]
 
     # ── External APIs ──────────────────────────────────────────────────────────
     DIDWW_API_KEY: str = os.getenv("DIDWW_API_KEY", "")
@@ -72,3 +75,6 @@ class Settings(BaseSettings):
 
 
 settings = Settings()
+
+if not settings.DEBUG and settings.SECRET_KEY == "dev-secret-key-change-in-production":
+    raise ValueError("FATAL ERROR: Default SECRET_KEY detected in production! Set SECRET_KEY environment variable.")

@@ -116,9 +116,17 @@ async def list_all_tenants(
     """List all tenants (admin only)."""
     filters = []
     if status_filter:
-        filters.append(Tenant.status.value == status_filter)
+        from app.models.tenant import TenantStatus
+        try:
+            filters.append(Tenant.status == TenantStatus(status_filter))
+        except ValueError:
+            pass
     if plan_filter:
-        filters.append(Tenant.plan.value == plan_filter)
+        from app.models.tenant import PlanType
+        try:
+            filters.append(Tenant.plan == PlanType(plan_filter))
+        except ValueError:
+            pass
 
     from sqlalchemy import and_
     where_clause = and_(*filters) if filters else True
@@ -165,14 +173,14 @@ async def get_tenant_detail(
     total_calls = call_count.scalar() or 0
 
     did_count = await db.execute(
-        select(func.count(DID.id)).where(DID.tenant_id == tenant_id, DID.status.value == "active")
+        select(func.count(DID.id)).where(DID.tenant_id == tenant_id)
     )
     active_dids = did_count.scalar() or 0
 
+    from app.models.tenant import KnowledgeBaseStatus
     kb_count = await db.execute(
         select(func.count(KnowledgeBase.id)).where(
             KnowledgeBase.tenant_id == tenant_id,
-            KnowledgeBase.status.value == "ready",
         )
     )
     ready_kbs = kb_count.scalar() or 0
